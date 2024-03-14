@@ -13,7 +13,5 @@ def build_features(df):
     # categories = ['type_animal', 'genre', 'couleur_1', 'couleur_2', 'couleur_3', 'taille', 'niveau_pilosite', 'vaccin', 'traitement_vermifuge', 'sterilisation', 'sante']
 
     df = df.drop(column_to_remove, axis=1)
-    df = df.dropna(subset=['vitesse_adoption'])
-
     # df = pd.get_dummies(df, columns=categories)
     return df

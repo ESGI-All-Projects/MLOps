@@ -17,7 +17,5 @@ def build_features(df: pd.DataFrame) -> Annotated[pd.DataFrame, "df"]:
     # 'sterilisation', 'sante']
 
     df = df.drop(column_to_remove, axis=1)
-    df = df.dropna(subset=['vitesse_adoption'])
-
     # df = pd.get_dummies(df, columns=categories)
     return df

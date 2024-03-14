@@ -2,33 +2,38 @@ import pandas as pd
 import numpy as np
 import joblib
 from xgboost import XGBClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score
+from sklearn.metrics import confusion_matrix, classification_report
 import matplotlib.pyplot as plt
 import seaborn as sns
-def train_model(df):
+def train_model(df, type_model='linear'):
     X = df.drop('vitesse_adoption', axis=1)
     Y = df['vitesse_adoption']
 
-    labels = Y.unique()
+    labels = Y.astype('int').unique()
 
     X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
-    model = XGBClassifier()
-    model.fit(X_train, y_train)
-    joblib.dump(model, 'models/xgboost.pkl')
+    if type_model == 'linear':
+        model = LogisticRegression()
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+    elif type_model == 'xgboost':
+        model = XGBClassifier()
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+    elif type_model == 'random':
+        y_pred = np.random.choice(labels, len(X_test))
 
-    y_pred = model.predict(X_test)
+    # joblib.dump(model, f'models/{type_model}.pkl')
+
+
     visualize_metrics(np.array(y_test).astype('int'), y_pred, labels)
 
 
 def visualize_metrics(y_test, y_pred, labels):
-    # evaluate predictions
-    accuracy = accuracy_score(y_test, y_pred)
-    print("Accuracy: %.2f%%" % (accuracy * 100.0))
-
-    unique_class = labels
-
-    auc_scores = roc_auc_score(y_test, y_pred, multi_class='ovr')
+    # evaluate precision/recall
+    print(classification_report(y_test, y_pred, target_names=list(map(str, labels))))
 
     # Afficher la matrice de confusion
     cm = confusion_matrix(y_test, y_pred)

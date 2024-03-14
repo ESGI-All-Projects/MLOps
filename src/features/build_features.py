@@ -4,7 +4,7 @@ from typing_extensions import Annotated
 
 
 @step
-def build_features(df: pd.DataFrame) -> Annotated[pd.DataFrame, "df"]:
+def build_features(df: pd.DataFrame) -> Annotated[pd.DataFrame, "clean_cols_df"]:
     column_to_remove = ['nom_animal',
                         'race_primaire',
                         'race_secondaire',

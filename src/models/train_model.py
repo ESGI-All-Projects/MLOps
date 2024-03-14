@@ -8,10 +8,11 @@ from sklearn.metrics import confusion_matrix, classification_report
 import matplotlib.pyplot as plt
 import seaborn as sns
 from zenml import step
+from typing_extensions import Annotated
 
 
 @step
-def train_model(df: pd.DataFrame, type_model='linear') -> None:
+def train_model(df: pd.DataFrame, type_model='linear') -> Annotated[XGBClassifier, "trained_model"]:
     X = df.drop('vitesse_adoption', axis=1)
     Y = df['vitesse_adoption']
 
@@ -30,7 +31,9 @@ def train_model(df: pd.DataFrame, type_model='linear') -> None:
         y_pred = np.random.choice(labels, len(X_test))
 
     joblib.dump(model, f'models/{type_model}.pkl')
-    #visualize_metrics(np.array(y_test).astype('int'), y_pred, labels)
+    # visualize_metrics(np.array(y_test).astype('int'), y_pred, labels)
+
+    return model
 
 
 @step

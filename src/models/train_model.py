@@ -7,7 +7,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 import matplotlib.pyplot as plt
 import seaborn as sns
-def train_model(df, type_model='linear'):
+from zenml import step
+
+
+@step
+def train_model(df: pd.DataFrame, type_model='linear') -> None:
     X = df.drop('vitesse_adoption', axis=1)
     Y = df['vitesse_adoption']
 
@@ -25,12 +29,11 @@ def train_model(df, type_model='linear'):
     elif type_model == 'random':
         y_pred = np.random.choice(labels, len(X_test))
 
-    # joblib.dump(model, f'models/{type_model}.pkl')
+    joblib.dump(model, f'models/{type_model}.pkl')
+    #visualize_metrics(np.array(y_test).astype('int'), y_pred, labels)
 
 
-    visualize_metrics(np.array(y_test).astype('int'), y_pred, labels)
-
-
+@step
 def visualize_metrics(y_test, y_pred, labels):
     # evaluate precision/recall
     print(classification_report(y_test, y_pred, target_names=list(map(str, labels))))
@@ -43,8 +46,3 @@ def visualize_metrics(y_test, y_pred, labels):
     plt.ylabel('True')
     plt.title('Confusion Matrix')
     plt.show()
-
-
-
-
-

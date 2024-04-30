@@ -31,6 +31,8 @@ def train_model(df: pd.DataFrame, type_model='linear') -> Annotated[XGBClassifie
         y_pred = np.random.choice(labels, len(X_test))
 
     joblib.dump(model, f'models/{type_model}.pkl')
+    metrics_report = classification_report(np.array(y_test).astype('int'), y_pred, target_names=list(map(str, labels)))
+
     # visualize_metrics(np.array(y_test).astype('int'), y_pred, labels)
 
     return model
@@ -39,7 +41,7 @@ def train_model(df: pd.DataFrame, type_model='linear') -> Annotated[XGBClassifie
 @step
 def visualize_metrics(y_test, y_pred, labels):
     # evaluate precision/recall
-    print(classification_report(y_test, y_pred, target_names=list(map(str, labels))))
+    # print(classification_report(y_test, y_pred, target_names=list(map(str, labels))))
 
     # Afficher la matrice de confusion
     cm = confusion_matrix(y_test, y_pred)

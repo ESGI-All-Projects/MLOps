@@ -54,6 +54,10 @@ zenml stack register mlflow_stack -e mlflow_experiment_tracker -a default -o def
 ```
 Crée et configure une stack ZenML nommée mlflow_stack avec MLflow comme tracker d'expériences, utilisant les paramètres par défaut pour l'orchestrateur et le dépôt d'artefacts. Cette stack est ensuite définie comme la configuration active pour le projet.
 
+```bash
+zenml model-deployer register mlflow_deployer --flavor=mlflow
+```
+Permet de définir mlflow comme deployer pour effectuer des predictions via l'api en local
 
 ## Auteurs
 

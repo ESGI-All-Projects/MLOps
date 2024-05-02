@@ -1,9 +1,7 @@
 from src.data.make_dataset import load_data
 from src.features.build_features import build_features
-from src.models.train_model import train_model, model_evaluator
-from src.models.predict_model import predict
-from zenml import pipeline, step
-from zenml.client import Client
+from src.models.train_model import train_model, model_evaluator, deploy_model
+from zenml import pipeline
 
 
 @pipeline
@@ -15,6 +13,7 @@ def train_model_pipeline():
     df_test = build_features(df_test)
     model = train_model(df_train)
     model_evaluator(model, df_test)
+    # deploy_model()
 
 
 if __name__ == "__main__":

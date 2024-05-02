@@ -6,9 +6,9 @@ Ce projet utilise des techniques de Machine Learning pour prédire la vitesse d'
 ## Structure du Projet
 Le projet est structuré comme suit:
 - `data/`: Contient les fichiers de données brutes et les scripts pour la préparation des données.
-- `models/`: Contient les scripts pour entraîner et prédire les modèles.
+- `src/models/`: Contient les scripts pour entraîner et prédire les modèles.
 - `src/`: Contient les scripts source pour le traitement des données, la construction des caractéristiques, etc.
-- `test/`: Contient les tests pour les modules du projet.
+- `tests/`: Contient les tests pour les modules du projet.
 
 ### Fichiers de Données
 - `adoption_animal.csv`: Données principales incluant la vitesse d'adoption et autres caractéristiques des animaux.

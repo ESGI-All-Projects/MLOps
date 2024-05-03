@@ -59,6 +59,16 @@ zenml model-deployer register mlflow_deployer --flavor=mlflow
 ```
 Permet de définir mlflow comme deployer pour effectuer des predictions via l'api en local
 
+```bash
+mlflow ui --backend-store-uri <TRACKING_URL>
+```
+Permet de lancer le serveur Mlflow en local. Il faut aller récupérer l'url dans les métadonnés d'une des steps qui utilise mlflow
+```
+
+```bash
+zenml up --blocking
+```
+Permet de lancer zenml sur window
 ## Auteurs
 
 - Charles Logeais
